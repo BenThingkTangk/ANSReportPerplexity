@@ -1,853 +1,894 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Avant Pathfinder × ATOM – Storyboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    :root {
-      --avant-blue: #2563eb;
-      --avant-blue-soft: #ebf2ff;
-      --avant-teal: #0ea5e9;
-      --bg: #f5f5f7;
-      --card: #ffffff;
-      --border: #e5e7eb;
-      --text-main: #0f172a;
-      --text-muted: #6b7280;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #ffffff, #f3f4f6);
-      color: var(--text-main);
-      min-height: 100vh;
-    }
-
-    a {
-      color: var(--avant-blue);
-      text-decoration: none;
-    }
-
-    .shell {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 18px 14px 32px;
-    }
-
-    .topline {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .story-hero {
-      background: linear-gradient(135deg, #f9fafb, #eff6ff);
-      border-radius: 18px;
-      border: 1px solid rgba(209,213,219,0.8);
-      box-shadow: 0 16px 40px rgba(15,23,42,0.06);
-      padding: 18px 18px 16px;
-      margin-bottom: 18px;
-    }
-
-    .story-title {
-      font-size: 26px;
-      font-weight: 800;
-      line-height: 1.2;
-      color: #0b1120;
-      margin-bottom: 8px;
-    }
-
-    .story-sub {
-      font-size: 13px;
-      color: var(--text-muted);
-      max-width: 640px;
-      margin-bottom: 12px;
-    }
-
-    .story-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-      font-size: 11px;
-      color: #4b5563;
-    }
-
-    .story-pill {
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.5);
-      background: #ffffff;
-    }
-
-    .story-grid {
-      margin-top: 12px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 8px;
-    }
-
-    .story-stat {
-      border-radius: 12px;
-      border: 1px solid rgba(209,213,219,0.9);
-      background: rgba(255,255,255,0.9);
-      padding: 7px 9px;
-      font-size: 10px;
-    }
-
-    .story-stat-label {
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #6b7280;
-      font-size: 9px;
-      margin-bottom: 2px;
-    }
-
-    .story-stat-value {
-      font-weight: 700;
-      font-size: 15px;
-      color: #111827;
-    }
-
-    .story-stat-caption {
-      color: #6b7280;
-      font-size: 10px;
-    }
-
-    .chapters {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      margin: 10px 0 14px;
-      padding-bottom: 4px;
-    }
-
-    .chapter-chip {
-      border-radius: 999px;
-      border: 1px solid rgba(209,213,219,0.9);
-      background: #ffffff;
-      padding: 5px 10px;
-      font-size: 11px;
-      white-space: nowrap;
-      color: #4b5563;
-      cursor: pointer;
-      transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
-    }
-
-    .chapter-chip.active {
-      background: var(--avant-blue-soft);
-      border-color: rgba(37,99,235,0.5);
-      color: var(--avant-blue);
-      font-weight: 600;
-    }
-
-    .section {
-      background: var(--card);
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      padding: 14px 14px 12px;
-      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
-      margin-bottom: 12px;
-    }
-
-    .section-header {
-      margin-bottom: 8px;
-    }
-
-    .section-kicker {
-      font-size: 11px;
-      color: var(--avant-blue);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      margin-bottom: 2px;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 3px;
-    }
-
-    .section-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 10px;
-      margin-top: 8px;
-      font-size: 12px;
-      color: #374151;
-    }
-
-    .story-block-title {
-      font-weight: 600;
-      font-size: 12px;
-      margin-bottom: 4px;
-      color: #111827;
-    }
-
-    .step {
-      margin-bottom: 4px;
-    }
-
-    .step span {
-      color: #9ca3af;
-      margin-right: 3px;
-    }
-
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-      font-size: 11px;
-    }
-
-    .table th,
-    .table td {
-      border: 1px solid #e5e7eb;
-      padding: 6px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    .table th {
-      background: #eff6ff;
-      color: #1d4ed8;
-      font-weight: 600;
-      font-size: 11px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 8px;
-      margin-top: 8px;
-      font-size: 11px;
-      color: #374151;
-    }
-
-    .card-sm {
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      background: #f9fafb;
-      padding: 7px 9px;
-    }
-
-    .card-sm-title {
-      font-weight: 600;
-      margin-bottom: 3px;
-      font-size: 11px;
-      color: #111827;
-    }
-
-    .note {
-      font-size: 10px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .assistant-box {
-      max-height: 190px;
-      overflow-y: auto;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      padding: 6px 8px;
-      background: #f9fafb;
-      font-size: 11px;
-      margin-bottom: 6px;
-      color: #374151;
-    }
-
-    .assistant-input-row {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      margin-top: 4px;
-    }
-
-    .assistant-input {
-      flex: 1;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      padding: 6px 10px;
-      font-size: 11px;
-      outline: none;
-    }
-
-    .btn-primary {
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(to right, var(--avant-blue), var(--avant-teal));
-      color: #ffffff;
-      padding: 6px 12px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn-secondary {
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      background: #ffffff;
-      color: #374151;
-      padding: 5px 10px;
-      font-size: 11px;
-      cursor: pointer;
-    }
-
-    .link-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    @media (max-width: 640px) {
-      .story-title {
-        font-size: 22px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P&S Assessment - Tim Grooms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            overflow: hidden;
+        }
+        
+        .slides-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 60px 80px;
+            background: white;
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-header {
+            border-bottom: 4px solid #2a5298;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .slide-title {
+            font-size: 48px;
+            color: #1e3c72;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .slide-subtitle {
+            font-size: 24px;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        h2 {
+            font-size: 36px;
+            color: #1e3c72;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 28px;
+            color: #2a5298;
+            margin: 25px 0 15px 0;
+            font-weight: 600;
+        }
+        
+        .content-box {
+            background: #f8f9fa;
+            border-left: 5px solid #2a5298;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .diagnosis-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        ul {
+            margin: 15px 0 15px 30px;
+            line-height: 1.8;
+        }
+        
+        li {
+            font-size: 20px;
+            color: #333;
+            margin: 10px 0;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .column {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 18px;
+        }
+        
+        .metric-value {
+            color: #2a5298;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .abnormal {
+            color: #dc3545;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            background: #2a5298;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .slide-number {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            font-size: 18px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .abbreviation {
+            font-weight: 600;
+            color: #2a5298;
+        }
+        
+        strong {
+            color: #1e3c72;
+        }
+        
+        .patient-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .patient-info h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .treatment-category {
+            margin: 25px 0;
+        }
+        
+        .bullet-highlight {
+            background: #e3f2fd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
 </head>
 <body>
-  <div class="shell">
-    <div class="story-hero" id="top">
-      <div class="topline">Avant Pathfinder × ATOM</div>
-      <h1 class="story-title">A Pathfinder story where the answer arrives before the call ends.</h1>
-      <p class="story-sub">
-        Today, Trusted Advisors walk customers through long IQAs and wait days for research.
-        In the ATOM version of Pathfinder, the system listens with you, thinks with you, and
-        builds the recommendation while you’re still in the room.
-      </p>
-      <div class="story-meta">
-        <span class="story-pill">Concept walkthrough · Not final UI</span>
-        <span>·</span>
-        <span>Designed for Avant product, Pathfinder, and sales leadership.</span>
-      </div>
-      <div class="story-grid">
-        <div class="story-stat">
-          <div class="story-stat-label">IQA Time</div>
-          <div class="story-stat-value">60 → 20–25 min</div>
-          <div class="story-stat-caption">Less form fatigue, more conversation.</div>
+    <div class="slides-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-header">
+                <div class="slide-title">Parasympathetic &amp; Sympathetic<br>Nervous System Assessment</div>
+                <div class="slide-subtitle">Clinical Report Summary</div>
+            </div>
+            <div class="slide-content">
+                <div class="patient-info">
+                    <h3>Patient Information</h3>
+                    <div class="metric">
+                        <span class="metric-label">Patient:</span>
+                        <span class="metric-value">Tim Grooms</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">DOB:</span>
+                        <span class="metric-value">November 6, 1960</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Assessment Date:</span>
+                        <span class="metric-value">February 28, 2026</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Primary Diagnosis:</span>
+                        <span class="metric-value">PTSD (Veteran)</span>
+                    </div>
+                </div>
+                <div class="content-box" style="margin-top: 40px;">
+                    <h3 style="margin-top: 0;">Report Purpose</h3>
+                    <p style="font-size: 22px; line-height: 1.6;">Baseline P&amp;S testing to assess Parasympathetic and Sympathetic Nervous System function and identify autonomic dysfunction contributing to patient symptoms.</p>
+                </div>
+            </div>
         </div>
-        <div class="story-stat">
-          <div class="story-stat-label">Turnaround</div>
-          <div class="story-stat-value">Days → Minutes</div>
-          <div class="story-stat-caption">Recommendations before you hang up.</div>
+
+        <!-- Slide 2: Test Results Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">P&amp;S Test Results</div>
+                <div class="slide-subtitle">Autonomic Function Assessment</div>
+            </div>
+            <div class="slide-content">
+                <div class="two-column">
+                    <div class="column">
+                        <h3 style="margin-top: 0; color: #28a745;">Normal Findings</h3>
+                        <ul style="margin-left: 15px;">
+                            <li>Heart Rate (HR) at rest</li>
+                            <li>Blood Pressure (BP) at rest</li>
+                            <li>Sympathetic activity at rest</li>
+                            <li>Rhythm strip unremarkable</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3 style="margin-top: 0; color: #dc3545;">Abnormal Findings</h3>
+                        <ul style="margin-left: 15px;">
+                            <li><span class="abnormal">Low Parasympathetic activity</span></li>
+                            <li><span class="abnormal">High Sympathovagal Balance (4.53)</span></li>
+                            <li><span class="abnormal">Breathing challenge responses low</span></li>
+                            <li><span class="abnormal">Weak BP response on standing</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="diagnosis-box" style="margin-top: 30px;">
+                    <h3 style="margin-top: 0;">Primary Autonomic Diagnoses</h3>
+                    <ul style="margin-left: 15px; font-size: 20px;">
+                        <li><strong>SE:</strong> Sympathetic Excess (resting)</li>
+                        <li><strong>PE:</strong> Parasympathetic Excess (Valsalva response)</li>
+                        <li><strong>SW:</strong> Sympathetic Withdrawal (masked/alpha upon standing)</li>
+                        <li><strong>SFD:</strong> Small Fiber Disorder</li>
+                        <li><strong>OI:</strong> Orthostatic Intolerance</li>
+                        <li><strong>Pre-POTS:</strong> Persistently elevated HR upon standing</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong style="font-size: 22px; color: #721c24;">⚠️ Risk Identified:</strong>
+                    <p style="font-size: 20px; margin-top: 10px; color: #721c24;">PE with SE indicates risk of <strong>Vasovagal Syncope (VVS)</strong></p>
+                </div>
+            </div>
         </div>
-        <div class="story-stat">
-          <div class="story-stat-label">Conversion</div>
-          <div class="story-stat-value">+ 20–25%</div>
-          <div class="story-stat-caption">Modeled uplift with a co‑pilot.</div>
+
+        <!-- Slide 3: Current Medical Profile -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Current Medical Profile</div>
+                <div class="slide-subtitle">Existing Diagnoses &amp; Medications</div>
+            </div>
+            <div class="slide-content">
+                <div class="two-column">
+                    <div class="column">
+                        <h3 style="margin-top: 0;">Diagnosed Conditions</h3>
+                        <ul style="margin-left: 15px;">
+                            <li>PTSD (Veteran)</li>
+                            <li>Neuropathy</li>
+                            <li>COPD</li>
+                            <li>Major Depressive Disorder (MDD)</li>
+                            <li>Attention Deficit Disorder (ADD)</li>
+                            <li>Narcolepsy</li>
+                            <li>Hypothyroidism</li>
+                            <li>Asthma</li>
+                            <li>Hypertension (HTN)</li>
+                        </ul>
+                        <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 5px;">
+                            <strong>Additional Factor:</strong> High alcohol use
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3 style="margin-top: 0;">Current Medications</h3>
+                        <ul style="margin-left: 15px;">
+                            <li>Hydrocodone</li>
+                            <li>Armodafinil</li>
+                            <li>Gabapentin</li>
+                            <li>Synthroid</li>
+                            <li>Methylphenidate</li>
+                            <li>Montelukast</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="story-stat">
-          <div class="story-stat-label">Advisor Load</div>
-          <div class="story-stat-value">↓</div>
-          <div class="story-stat-caption">Less manual research and orchestration.</div>
+
+        <!-- Slide 4: Pathophysiology -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Clinical Pathophysiology</div>
+                <div class="slide-subtitle">How P&amp;S Dysfunction Explains Symptoms</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-box">
+                    <h3 style="margin-top: 0;">Central Mechanism: Poor Cerebral Perfusion</h3>
+                    <p style="font-size: 20px; line-height: 1.6;"><strong>PE &amp; SW</strong> lead to inadequate brain blood flow, causing the brain to be "half asleep" during the day when upright.</p>
+                </div>
+
+                <h3>Symptom Cascade</h3>
+                
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Neuropathy &amp; Pain</strong>
+                    <p style="font-size: 18px; margin-top: 8px;">Peripheral Autonomic Neuropathy, including Small Fiber Disorder (SFD)</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">MDD-like, ADD-like, Narcolepsy-like Symptoms</strong>
+                    <p style="font-size: 18px; margin-top: 8px;">Result from chronic poor cerebral perfusion and PE &amp; SW dysfunction</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Hypothyroid Symptoms</strong>
+                    <p style="font-size: 18px; margin-top: 8px;">Parasympathetics control hormone coordination; PE may induce hypothyroidism</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Asthma-like Symptoms</strong>
+                    <p style="font-size: 18px; margin-top: 8px;">Parasympathetics control immune system; Mast Cells release histamine causing airway inflammation</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Hypertension</strong>
+                    <p style="font-size: 18px; margin-top: 8px;">SE elevates BP as compensatory mechanism to support cerebral perfusion</p>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <!-- Slide 5: Symptom Patterns -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Clinical Symptom Patterns</div>
+                <div class="slide-subtitle">Understanding Daily Symptom Manifestations</div>
+            </div>
+            <div class="slide-content">
+                <div class="diagnosis-box">
+                    <h3 style="margin-top: 0;">Daytime (Upright Position)</h3>
+                    <ul style="margin-left: 15px; font-size: 19px;">
+                        <li>Brain marginally perfused → "half asleep"</li>
+                        <li>Depression-like symptoms</li>
+                        <li>Headache or migraine</li>
+                        <li>Brain fog and cognitive difficulties</li>
+                        <li>Lightheadedness and fatigue</li>
+                        <li>Memory and sensory disorders</li>
+                        <li>ADD/ADHD-like symptoms (chronic demand for more blood)</li>
+                    </ul>
+                </div>
+
+                <div class="diagnosis-box">
+                    <h3 style="margin-top: 0;">Nighttime (Supine Position)</h3>
+                    <ul style="margin-left: 15px; font-size: 19px;">
+                        <li>Brain finally receives adequate blood</li>
+                        <li>Brain "wakes up" and "wants to play"</li>
+                        <li>Sleep difficulties and insomnia</li>
+                        <li>Twitching and Myoclonus (seizure-like activity from poor perfusion)</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h3 style="margin-top: 0; color: #721c24;">Anxiety-like Episodes</h3>
+                    <p style="font-size: 19px; line-height: 1.6; color: #721c24;">Any further drop in cerebral perfusion triggers "adrenaline storms" - brain calling for more blood:</p>
+                    <ul style="margin-left: 15px; font-size: 18px; color: #721c24;">
+                        <li>Shortness of breath (SOB)</li>
+                        <li>Palpitations</li>
+                        <li>Chest tightness</li>
+                    </ul>
+                    <p style="font-size: 18px; margin-top: 10px; color: #721c24;"><strong>Triggers:</strong> Eating, emotions, hormonal changes, dehydration</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Additional Mechanisms -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Additional Pathophysiology</div>
+                <div class="slide-subtitle">Inflammation &amp; Sensory Abnormalities</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-box">
+                    <h3 style="margin-top: 0;">Sympathetic Excess (SE) Effects</h3>
+                    <ul style="margin-left: 15px; font-size: 20px;">
+                        <li><strong>Amplifies inflammation</strong>
+                            <ul style="margin-left: 20px; font-size: 18px;">
+                                <li>Inflammatory pain responses</li>
+                                <li>Joint pain</li>
+                                <li>Asthma-like symptoms</li>
+                            </ul>
+                        </li>
+                        <li><strong>Promotes anxiety-like symptoms</strong></li>
+                        <li><strong>Note:</strong> SE is compensatory and will normalize organically as PE &amp; SW are relieved</li>
+                    </ul>
+                </div>
+
+                <div class="content-box">
+                    <h3 style="margin-top: 0;">Cranial Nerve &amp; Sensory Issues</h3>
+                    <ul style="margin-left: 15px; font-size: 20px;">
+                        <li><strong>Marginal brain perfusion</strong> → Cranial nerves marginally perfused → Abnormal behavior</li>
+                        <li><strong>SE-related inflammation</strong> may compress cranial nerves as they pass through skull</li>
+                        <li><strong>Result:</strong> Vision abnormalities and other sensory disturbances</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <h3 style="margin-top: 0; color: #155724;">Compensatory Mechanism Insight</h3>
+                    <p style="font-size: 20px; line-height: 1.6; color: #155724;">SE (elevated BP) is the body's attempt to counter poor perfusion from PE &amp; SW. <strong>Treating the root cause (PE &amp; SW) allows SE to resolve naturally.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Treatment Strategy Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Treatment Strategy</div>
+                <div class="slide-subtitle">Low &amp; Slow Approach to P&amp;S Rebalancing</div>
+            </div>
+            <div class="slide-content">
+                <div class="success-box">
+                    <h3 style="margin-top: 0;">Core Principle: Low-and-Slow</h3>
+                    <p style="font-size: 20px; line-height: 1.6;">All P&amp;S therapy must be <strong>low-dose and gradual</strong> to prevent additional symptoms. Due to ongoing stress (internal/external), expect slow relief with frequent setbacks and flares.</p>
+                </div>
+
+                <h3>Treatment Goals</h3>
+                <div class="two-column">
+                    <div class="column">
+                        <h3 style="font-size: 22px; color: #2a5298;">Primary Targets</h3>
+                        <ol style="margin-left: 20px; font-size: 19px;">
+                            <li style="margin: 12px 0;"><strong>Relieve PE</strong> (Parasympathetic Excess)</li>
+                            <li style="margin: 12px 0;"><strong>Treat SW</strong> (Sympathetic Withdrawal)</li>
+                            <li style="margin: 12px 0;"><strong>SE resolves organically</strong> as PE &amp; SW improve</li>
+                        </ol>
+                    </div>
+                    <div class="column">
+                        <h3 style="font-size: 22px; color: #28a745;">Expected Outcomes</h3>
+                        <ul style="margin-left: 15px; font-size: 19px;">
+                            <li>Improved cerebral perfusion</li>
+                            <li>Symptom relief</li>
+                            <li>Possible weaning from additional medications</li>
+                            <li>Long-term autonomic balance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-box" style="margin-top: 25px;">
+                    <h3 style="margin-top: 0;">Long-term Outlook</h3>
+                    <p style="font-size: 19px; line-height: 1.6;">The autonomic system has memory and can maintain balance once normalized. However, continued exposure to stressors requires longer-term therapy, <strong>preferably natural therapies only.</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Pharmacological Treatment -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Pharmacological Treatment</div>
+                <div class="slide-subtitle">Medication Recommendations</div>
+            </div>
+            <div class="slide-content">
+                <div class="treatment-category">
+                    <div class="diagnosis-box">
+                        <h3 style="margin-top: 0;">For PE (Parasympathetic Excess)</h3>
+                        <div style="font-size: 20px;">
+                            <strong style="color: #856404;">Nortriptyline</strong>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li><strong>Dose:</strong> No more than 10mg once daily</li>
+                                <li><strong>Timing:</strong> 12 hours before waking, but before 8 PM</li>
+                                <li><strong>Mechanism:</strong> Acts as anti-cholinergic (not anti-depressant at this dose)</li>
+                                <li><strong>Benefits:</strong>
+                                    <ul style="margin-left: 20px;">
+                                        <li>Helps pattern sleep</li>
+                                        <li>May help with headache and pain</li>
+                                        <li>Patients often self-wean from other antidepressants/anxiolytics</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Note:</strong> Consult prescribing physician before weaning other psych meds</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="treatment-category">
+                    <div class="content-box">
+                        <h3 style="margin-top: 0;">For SW (Sympathetic Withdrawal) &amp; Abnormal Stand Response</h3>
+                        <ol style="margin-left: 20px; font-size: 19px;">
+                            <li style="margin: 15px 0;"><strong>Hydration &amp; Electrolytes:</strong> 6-8 glasses water daily + 1 tablespoon salt in 64 oz water (5.5g Sodium)</li>
+                            <li style="margin: 15px 0;"><strong>Compression garments:</strong> Calf, thigh, abdomen (higher is better) when standing (not during exercise)</li>
+                            <li style="margin: 15px 0;"><strong>r-Alpha-Lipoic Acid (ALA):</strong> ¼ tsp in water, once daily (Geronova brand) - nerve-selective antioxidant</li>
+                            <li style="margin: 15px 0;"><strong>Midodrine:</strong> 2.5mg TID, titrated slowly from ½ pill once morning, over 12 weeks (6 increments)</li>
+                        </ol>
+                        <p style="font-size: 18px; margin-top: 15px; font-style: italic;">Note: Low-dose Midodrine may raise BP a few mmHg; ALA will lower BP a few mmHg</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Supplemental Therapy -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Supplemental Therapy</div>
+                <div class="slide-subtitle">Symptom-Specific Recommendations</div>
+            </div>
+            <div class="slide-content">
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Beet Root Extract</strong>
+                    <p style="font-size: 18px; margin-top: 8px;"><strong>Dose:</strong> 500mg once daily</p>
+                    <p style="font-size: 18px;"><strong>Purpose:</strong> Relieve endothelial inflammation; help upper GI symptoms</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">CoQ10</strong>
+                    <p style="font-size: 18px; margin-top: 8px;"><strong>Purpose:</strong> Cardiovascular-selective antioxidant for palpitations, SOB, tachycardia from anxiety-like symptoms or pre-POTS</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Methylfolate</strong>
+                    <p style="font-size: 18px; margin-top: 8px;"><strong>Dose:</strong> 7.5mg once daily, titrated to 15mg or 30mg as needed</p>
+                    <p style="font-size: 18px;"><strong>Purpose:</strong> For Small Fiber Disorder (SFD)</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Turmeric</strong>
+                    <p style="font-size: 18px; margin-top: 8px;"><strong>Dose:</strong> 1000mg up to three times daily as needed</p>
+                    <p style="font-size: 18px;"><strong>Purpose:</strong> Musculoskeletal/joint pain and general inflammation</p>
+                </div>
+
+                <div class="bullet-highlight">
+                    <strong style="font-size: 20px;">Mast Cell Stabilization (H1 &amp; H2 Blockade)</strong>
+                    <p style="font-size: 18px; margin-top: 8px;"><strong>Zyrtec:</strong> 10mg once daily (H1-blocker)</p>
+                    <p style="font-size: 18px;"><strong>Pepcid:</strong> 20mg once daily (H2-blocker)</p>
+                    <p style="font-size: 18px;"><strong>Purpose:</strong> Rashes, hives, food/chemical sensitivities, asthma-like symptoms</p>
+                    <p style="font-size: 17px; font-style: italic; margin-top: 8px;">Note: Both H1 and H2 blockade needed together</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Exercise Protocol -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Low &amp; Slow Exercise Protocol</div>
+                <div class="slide-subtitle">Retraining the Autonomic Nervous System</div>
+            </div>
+            <div class="slide-content">
+                <div class="warning-box">
+                    <h3 style="margin-top: 0; color: #721c24;">Critical Concept</h3>
+                    <p style="font-size: 19px; line-height: 1.6; color: #721c24;">With PE, <strong>all stress is perceived as unhealthy stress</strong>, even moderate exercise. The heart acts as if deconditioned due to P&amp;S dysfunction. Goal: retrain nervous system to recognize manageable stress.</p>
+                </div>
+
+                <div class="content-box">
+                    <h3 style="margin-top: 0;">Exercise Requirements</h3>
+                    <ul style="margin-left: 15px; font-size: 19px;">
+                        <li><strong>Duration:</strong> 6-9 months minimum</li>
+                        <li><strong>Frequency:</strong> Daily (skipping 1 week restarts program)</li>
+                        <li><strong>Length:</strong> 40 contiguous minutes (may work up to this)</li>
+                        <li><strong>Intensity:</strong> Zero impact, pure cardiac workout</li>
+                        <li><strong>Target:</strong> No specific HR/BP - should converse normally without being winded after 40 min</li>
+                    </ul>
+                </div>
+
+                <div class="two-column" style="margin-top: 25px;">
+                    <div class="column">
+                        <h3 style="font-size: 22px; margin-top: 0;">✅ Recommended Activities</h3>
+                        <ul style="margin-left: 15px; font-size: 18px;">
+                            <li><strong>Walking:</strong> 2 mph maximum</li>
+                            <li><strong>Pool walking:</strong> Water above belly button, 2 mph pace</li>
+                            <li><strong>Easy biking:</strong> Pedal like walking at 2 mph</li>
+                            <li><strong>Swimming:</strong> NOT arms + legs together (use kickboard OR arms only, very slow)</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3 style="font-size: 22px; margin-top: 0;">❌ Avoid</h3>
+                        <ul style="margin-left: 15px; font-size: 18px;">
+                            <li>Elliptical (HR rises too fast)</li>
+                            <li>Standard swimming (too many muscles)</li>
+                            <li>Any activity raising HR quickly</li>
+                            <li>Activities causing tissue breakdown</li>
+                            <li>Forcing through fatigue/pain</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Exercise Details -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Exercise Protocol Details</div>
+                <div class="slide-subtitle">Critical Guidelines &amp; Modifications</div>
+            </div>
+            <div class="slide-content">
+                <div class="success-box">
+                    <h3 style="margin-top: 0;">Why Low &amp; Slow Works</h3>
+                    <p style="font-size: 19px; line-height: 1.6;">Patient loves exercise because whole body helps heart pump blood to brain. However, <strong>post-exercise malaise is the problem.</strong> Low &amp; slow introduces manageable stress to break the "bad habit" of everything being perceived as stress.</p>
+                </div>
+
+                <div class="content-box">
+                    <h3 style="margin-top: 0;">Stopping Criteria</h3>
+                    <p style="font-size: 19px; line-height: 1.6;"><strong>Patient determines true limit:</strong> If fatigue or pain requires forcing through, <strong>STOP IMMEDIATELY.</strong> That's when healthy exercise becomes bad stress. Duration doesn't matter.</p>
+                </div>
+
+                <div class="diagnosis-box">
+                    <h3 style="margin-top: 0;">Minimal Exercise Option (High Stress Days)</h3>
+                    <p style="font-size: 19px; line-height: 1.6;">When even basic exercise is too strenuous:</p>
+                    <ul style="margin-left: 20px; font-size: 18px;">
+                        <li><strong>Position:</strong> Lie supine (on back)</li>
+                        <li><strong>Activity:</strong> Kick lower legs as if walking at 2 mph</li>
+                        <li><strong>Purpose:</strong> Move blood from feet to heart without fighting gravity</li>
+                        <li><strong>Benefit:</strong> Delivers blood to brain, making exercise more tolerable</li>
+                    </ul>
+                </div>
+
+                <div class="content-box">
+                    <h3 style="margin-top: 0;">Aqua Therapy Prescription</h3>
+                    <p style="font-size: 19px; line-height: 1.6;"><strong>Consider prescribing:</strong> Aqua Therapy, 3 days/week</p>
+                    <ul style="margin-left: 20px; font-size: 18px;">
+                        <li>May help insurance cover pool membership</li>
+                        <li>Actual therapist not needed (their "more is better" contradicts P&amp;S needs)</li>
+                        <li>Swimming most recommended for autonomic patients</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <h3 style="margin-top: 0;">Long-term Goal</h3>
+                    <p style="font-size: 19px; line-height: 1.6;">After 6-9 months and normalized Parasympathetic activity, <strong>more strenuous exercise may be gradually returned.</strong> Parasympathetics (re-)trained to not over-react to stressful stimuli.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Key Abbreviations -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Key Abbreviations</div>
+                <div class="slide-subtitle">Clinical Terminology Reference</div>
+            </div>
+            <div class="slide-content">
+                <div class="two-column">
+                    <div class="column">
+                        <h3 style="margin-top: 0;">Autonomic Terms</h3>
+                        <div class="metric">
+                            <span class="metric-label">P&amp;S</span>
+                            <span class="metric-value">Parasympathetic &amp; Sympathetic</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">SE</span>
+                            <span class="metric-value">Sympathetic Excess</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">PE</span>
+                            <span class="metric-value">Parasympathetic Excess</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">SW</span>
+                            <span class="metric-value">Sympathetic Withdrawal</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">SB</span>
+                            <span class="metric-value">Sympathovagal Balance</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">SFD</span>
+                            <span class="metric-value">Small Fiber Disorder</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">OI</span>
+                            <span class="metric-value">Orthostatic Intolerance</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">POTS</span>
+                            <span class="metric-value">Postural Orthostatic Tachycardia Syndrome</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">VVS</span>
+                            <span class="metric-value">Vasovagal Syncope</span>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h3 style="margin-top: 0;">Clinical Conditions</h3>
+                        <div class="metric">
+                            <span class="metric-label">PTSD</span>
+                            <span class="metric-value">Post-Traumatic Stress Disorder</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">MDD</span>
+                            <span class="metric-value">Major Depressive Disorder</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">ADD/ADHD</span>
+                            <span class="metric-value">Attention Deficit (Hyperactivity) Disorder</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">COPD</span>
+                            <span class="metric-value">Chronic Obstructive Pulmonary Disease</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">HTN</span>
+                            <span class="metric-value">Hypertension</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">MCAS</span>
+                            <span class="metric-value">Mast Cell Activation Syndrome</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">SOB</span>
+                            <span class="metric-value">Shortness of Breath</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">HR</span>
+                            <span class="metric-value">Heart Rate</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">BP</span>
+                            <span class="metric-value">Blood Pressure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Follow-up -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">Follow-up &amp; Monitoring</div>
+                <div class="slide-subtitle">Next Steps</div>
+            </div>
+            <div class="slide-content">
+                <div class="success-box">
+                    <h3 style="margin-top: 0;">Retest Schedule</h3>
+                    <p style="font-size: 24px; line-height: 1.6;"><strong>Retest in 6 months</strong> to assess treatment response and P&amp;S rebalancing</p>
+                </div>
+
+                <div class="content-box" style="margin-top: 30px;">
+                    <h3 style="margin-top: 0;">Setting Patient Expectations</h3>
+                    <ul style="margin-left: 15px; font-size: 20px; line-height: 1.6;">
+                        <li>Due to ongoing stress (internal and external), relief will be <strong>slow</strong></li>
+                        <li>Expect <strong>frequent setbacks and flares</strong></li>
+                        <li>Daily stress relief activities are <strong>important</strong></li>
+                        <li>All medications must be started <strong>low-and-slow</strong></li>
+                        <li>Patient determines exercise limits</li>
+                    </ul>
+                </div>
+
+                <div class="content-box" style="margin-top: 30px;">
+                    <h3 style="margin-top: 0;">Medication Weaning Expectations</h3>
+                    <p style="font-size: 20px; line-height: 1.6;">As PE is relieved with Nortriptyline, patients typically begin to <strong>self-wean from antidepressants, anxiolytics, and psych medications.</strong> However, always consult with prescribing physician before making changes.</p>
+                </div>
+
+                <div class="diagnosis-box" style="margin-top: 30px;">
+                    <h3 style="margin-top: 0;">Continued Exposure Considerations</h3>
+                    <p style="font-size: 20px; line-height: 1.6;">Continued exposure to stressors will continually pull P&amp;S out of balance. Patient will require <strong>longer-term therapy, preferably only natural therapies</strong> once initial rebalancing achieved.</p>
+                </div>
+
+                <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; color: white;">
+                    <h3 style="color: white; margin-top: 0;">Report Prepared By</h3>
+                    <p style="font-size: 20px; margin: 10px 0;"><strong>J. Colombo, PhD</strong></p>
+                    <p style="font-size: 18px; margin: 5px 0;">Parasympathetic &amp; Sympathetic Nervous System Consultant</p>
+                    <p style="font-size: 18px; margin: 5px 0;">Franklin Cardiovascular Associates, PA</p>
+                    <p style="font-size: 18px; margin: 5px 0;">CTO and Senior Medical Director, Physio PS, Inc.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="chapters">
-      <button class="chapter-chip active" data-target="scene-1">1. Before & After</button>
-      <button class="chapter-chip" data-target="scene-2">2. Dynamic Matrices</button>
-      <button class="chapter-chip" data-target="scene-3">3. Atlas & Signals</button>
-      <button class="chapter-chip" data-target="scene-4">4. Under the Hood</button>
-      <button class="chapter-chip" data-target="scene-5">5. Roadmap & ROI</button>
-      <button class="chapter-chip" data-target="scene-6">6. Live Examples</button>
-      <button class="chapter-chip" data-target="scene-7">7. Ask ATOM</button>
+    <div class="slide-number">
+        <span id="current-slide">1</span> / <span id="total-slides">13</span>
     </div>
 
-    <!-- Scene 1 -->
-    <section id="scene-1" class="section">
-      <div class="section-header">
-        <div class="section-kicker">Scene 1 · The Moment of Truth</div>
-        <h2 class="section-title">Pathfinder today vs Pathfinder with ATOM</h2>
-        <p class="section-sub">
-          Same Trusted Advisor, same customer, same hour. Completely different experience.
-        </p>
-      </div>
+    <div class="controls">
+        <button id="prev-btn">← Previous</button>
+        <button id="next-btn">Next →</button>
+    </div>
 
-      <div class="two-col">
-        <div>
-          <div class="story-block-title">Today’s story</div>
-          <p class="step"><span>1.</span> Advisor opens Pathfinder and walks through a 60+ minute IQA.</p>
-          <p class="step"><span>2.</span> The submission vanishes into a 3–5 day engineering queue.</p>
-          <p class="step"><span>3.</span> Someone spends 2–4 hours researching providers and rebuilding a matrix.</p>
-          <p class="step"><span>4.</span> A static PDF and recommendation appear in the advisor’s inbox.</p>
-          <p class="step"><span>5.</span> The advisor tries to re‑ignite the customer conversation days later.</p>
-        </div>
-        <div>
-          <div class="story-block-title">The ATOM story</div>
-          <p class="step"><span>1.</span> As the IQA starts, ATOM quietly begins listening and structuring the session.</p>
-          <p class="step"><span>2.</span> A small side panel surfaces next questions, phrasing, and objections.</p>
-          <p class="step"><span>3.</span> Dynamic Matrices fill in and re‑rank in real time as answers land.</p>
-          <p class="step"><span>4.</span> By minute 25, a ranked recommendation and story arc are already drafted.</p>
-          <p class="step"><span>5.</span> The call ends with a clear path and a customer‑ready artifact, not a todo.</p>
-        </div>
-      </div>
-    </section>
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentSlideSpan = document.getElementById('current-slide');
+        const totalSlidesSpan = document.getElementById('total-slides');
 
-    <!-- Scene 2 -->
-    <section id="scene-2" class="section">
-      <div class="section-header">
-        <div class="section-kicker">Scene 2 · The Living Matrix</div>
-        <h2 class="section-title">Dynamic Matrices that move with the conversation</h2>
-        <p class="section-sub">
-          Think of Dynamic Matrices as the shared “table” everyone is gathered around – except the table
-          updates itself as requirements change.
-        </p>
-      </div>
+        totalSlidesSpan.textContent = totalSlides;
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Capability</th>
-            <th>Today</th>
-            <th>With ATOM</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>How it’s built</td>
-            <td>Manually, after the call</td>
-            <td>Auto‑populated during the call from IQA answers and signals</td>
-          </tr>
-          <tr>
-            <td>Ranking providers</td>
-            <td>Static per submission</td>
-            <td>Re‑ranks in real time when needs change</td>
-          </tr>
-          <tr>
-            <td>Explaining the scores</td>
-            <td>Depends on who has time to write</td>
-            <td>Every score has a “why” behind it and a source to show</td>
-          </tr>
-          <tr>
-            <td>Deliverables</td>
-            <td>One‑off docs built by hand</td>
-            <td>Advisor and customer versions published automatically</td>
-          </tr>
-        </tbody>
-      </table>
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            currentSlideSpan.textContent = currentSlide + 1;
 
-      <div class="cards">
-        <div class="card-sm">
-          <div class="card-sm-title">Auto‑population</div>
-          <p>
-            The moment an IQA answer is captured, the matrix begins to fill in: providers appear,
-            scores are assigned, and obvious mismatches drop away.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">Live re‑ranking</div>
-          <p>
-            A new compliance requirement, a budget guardrail, a deployment preference – mention it,
-            and the matrix reshuffles so the top row always matches the true ask.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">Explainable by design</div>
-          <p>
-            Click into any cell and you see the logic: requirements, provider facts, and supporting
-            documentation. Nothing is “just because the AI said so.”
-          </p>
-        </div>
-      </div>
-
-      <p class="note" style="margin-top:6px;">
-        Want to feel this pattern in your hands? Open a live Dynamic Matrix: <a href="https://www.antimatterai.com/resources/vendor-matrix" target="_blank">AI Vendor Matrix</a>.
-      </p>
-    </section>
-
-    <!-- Scene 3 -->
-    <section id="scene-3" class="section">
-      <div class="section-header">
-        <div class="section-kicker">Scene 3 · The World Is Big</div>
-        <h2 class="section-title">Atlas, IntenIQ, and global data center decisions</h2>
-        <p class="section-sub">
-          Data center deals are where complexity spikes: geography, power, latency, regulation.
-          Atlas and IntenIQ give ATOM Pathfinder‑ready instincts in this landscape.
-        </p>
-      </div>
-
-      <div class="cards">
-        <div class="card-sm">
-          <div class="card-sm-title">Atlas as the map</div>
-          <p>
-            Atlas knows who does what, and where, around the world. ATOM turns Pathfinder IQA answers into
-            precise Atlas queries – no more wrestling with filters mid‑call.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">IntenIQ as the signal layer</div>
-          <p>
-            IntenIQ watches for intent: urgency, risk sensitivity, appetite for change. Those signals
-            help re‑weight providers and guide how the advisor frames the story.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">“Ask Atlas” as the voice</div>
-          <p>
-            Instead of “let me get back to you,” advisors can ask Atlas questions in plain language –
-            and get structured answers they can read aloud and show on screen.
-          </p>
-        </div>
-      </div>
-
-      <p class="note" style="margin-top:6px;">
-        See these ideas live:
-        <a href="https://www.antimatterai.com/resources/channel-partners" target="_blank">Trusted Advisor Assistant</a>,
-        <a href="https://www.antimatterai.com/atom-intentiq" target="_blank">IntenIQ</a>.
-      </p>
-    </section>
-
-    <!-- Scene 4 -->
-    <section id="scene-4" class="section">
-      <div class="section-header">
-        <div class="section-kicker">Scene 4 · Under the Hood</div>
-        <h2 class="section-title">Pathfinder stays the system of record. ATOM becomes the brain.</h2>
-        <p class="section-sub">
-          The architecture is simple on purpose: Pathfinder owns the workflow and data; ATOM adds an
-          evidence‑first, session‑centric intelligence layer.
-        </p>
-      </div>
-
-      <div class="cards">
-        <div class="card-sm">
-          <div class="card-sm-title">Pathfinder</div>
-          <p>
-            Handles log‑in, IQA configuration, submissions, routing, and UI – the front door and
-            the record of everything that happens.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">ATOM services</div>
-          <p>
-            Listen to IQAs and calls, normalize them, retrieve the right provider facts, score
-            fit, coach the advisor, and assemble artifacts in the background.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">Knowledge & providers</div>
-          <p>
-            Provider profiles, Dynamic Matrices, Atlas data, case studies, and compliance details
-            live as a governed knowledge base – the ground truth ATOM references.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">Security & control</div>
-          <p>
-            Encryption, roles, audit, and redaction follow familiar enterprise patterns. ATOM
-            plugs into what Avant already does well, instead of inventing a new island.
-          </p>
-        </div>
-      </div>
-
-      <p class="note">
-        Underneath, this is powered by the same ATOM agentic platform Antimatter uses for other
-        enterprises: <a href="https://www.antimatterai.com/agentic-ai" target="_blank">Agentic AI</a>.
-      </p>
-    </section>
-
-    <!-- Scene 5 -->
-    <section id="scene-5" class="section">
-      <div class="section-header">
-        <div class="section-kicker">Scene 5 · From Pilot to Habit</div>
-        <h2 class="section-title">Roadmap and the shape of the business case</h2>
-        <p class="section-sub">
-          The point is not to launch “AI” – it’s to change how Pathfinder feels to advisors and customers
-          in a matter of weeks, then scale what works.
-        </p>
-      </div>
-
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Phase</th>
-            <th>What you’d see</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0–1 · Discovery & foundation</td>
-            <td>One pilot category chosen, schemas agreed, Pathfinder and ATOM talking to each other.</td>
-          </tr>
-          <tr>
-            <td>2 · First ATOM‑powered IQA</td>
-            <td>An end‑to‑end experience in a single category: coaching panel, Dynamic Matrix, and <5‑minute recommendation.</td>
-          </tr>
-          <tr>
-            <td>3–4 · Live sessions & more categories</td>
-            <td>Browser sessions with live guidance, “Ask the Matrix/Atlas,” and a repeatable pattern across 3–5 categories.</td>
-          </tr>
-          <tr>
-            <td>5 · Pathfinder, but upgraded</td>
-            <td>Core Pathfinder categories running with ATOM, plus the dashboards that show it’s working.</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="cards">
-        <div class="card-sm">
-          <div class="card-sm-title">Why this is worth it</div>
-          <p>
-            The math is straightforward: shorter IQAs, fewer research hours, and higher close rates
-            stack into eight‑figure annual value in a 100‑rep, multi‑IQA‑per‑week model.
-          </p>
-        </div>
-        <div class="card-sm">
-          <div class="card-sm-title">Why this is safe</div>
-          <p>
-            Facts stay grounded in provider data and documents, coaching is gated by confidence,
-            and ATOM is wired to tolerate imperfect data instead of denying reality.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Scene 6 -->
-    <section id="scene-6" class="section">
-      <div class="section-header">
-        <div class="section-kicker">Scene 6 · Proof It’s Real</div>
-        <h2 class="section-title">What ATOM already does today</h2>
-        <p class="section-sub">
-          Pathfinder × ATOM isn’t a theory. It’s a recombination of pieces that already exist.
-        </p>
-      </div>
-
-      <div class="cards">
-        <a class="card-sm" href="https://www.antimatterai.com/resources/vendor-matrix" target="_blank">
-          <div class="card-sm-title">AI Vendor Matrix</div>
-          <p>
-            Interactive Dynamic Matrix comparing enterprise AI platforms – a direct preview of the
-            Pathfinder matrix experience.
-          </p>
-        </a>
-        <a class="card-sm" href="https://www.antimatterai.com/resources/channel-partners" target="_blank">
-          <div class="card-sm-title">Trusted Advisor Assistant</div>
-          <p>
-            Channel‑focused assistant that mirrors how ATOM can coach Pathfinder Trusted Advisors.
-          </p>
-        </a>
-        <a class="card-sm" href="https://www.antimatterai.com/atom-intentiq" target="_blank">
-          <div class="card-sm-title">IntenIQ</div>
-          <p>
-            Real‑time intent and signal engine, shaping which providers rise to the top and how
-            the story is told.
-          </p>
-        </a>
-        <a class="card-sm" href="https://www.antimatterai.com/agentic-ai" target="_blank">
-          <div class="card-sm-title">ATOM Agentic Platform</div>
-          <p>
-            The full “black box” ATOM stack that this Pathfinder concept is built on.
-          </p>
-        </a>
-      </div>
-    </section>
-
-    <!-- Scene 7 -->
-    <section id="scene-7" class="section">
-      <div class="section-header">
-        <div class="section-kicker">Scene 7 · Ask the Story</div>
-        <h2 class="section-title">Ask ATOM about Pathfinder</h2>
-        <p class="section-sub">
-          Use this panel the way an exec might: to sanity‑check the story, stress‑test the value,
-          and understand what changes on day one.
-        </p>
-      </div>
-
-      <div id="assistantTranscript" class="assistant-box">
-        <div><strong>ATOM:</strong> Ask me what changes for advisors, how Dynamic Matrices actually behave, or how this becomes real inside Pathfinder.</div>
-      </div>
-
-      <div class="assistant-input-row">
-        <input
-          id="assistantInput"
-          class="assistant-input"
-          type="text"
-          placeholder="e.g. What’s the first thing advisors would notice?"
-        />
-        <button class="btn-primary" id="assistantSendBtn">Ask ATOM</button>
-      </div>
-
-      <div class="link-row">
-        <button class="btn-secondary" onclick="window.open('https://www.antimatterai.com/resources/vendor-matrix','_blank')">
-          See Dynamic Matrix live
-        </button>
-        <button class="btn-secondary" onclick="window.open('https://www.antimatterai.com/resources/channel-partners','_blank')">
-          Try Trusted Advisor Assistant
-        </button>
-        <button class="btn-secondary" onclick="window.open('https://www.antimatterai.com/atom-intentiq','_blank')">
-          Explore IntenIQ
-        </button>
-        <button class="btn-secondary" onclick="window.open('https://www.antimatterai.com/agentic-ai','_blank')">
-          View ATOM platform
-        </button>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    // Chapter navigation
-    document.querySelectorAll('.chapter-chip').forEach((chip) => {
-      chip.addEventListener('click', () => {
-        const id = chip.dataset.target;
-        if (!id) return;
-        document.querySelectorAll('.chapter-chip').forEach((c) => c.classList.remove('active'));
-        chip.classList.add('active');
-        const section = document.getElementById(id);
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
         }
-      });
-    });
 
-    // Executive overview metrics toggle (simplified)
-    const metricsGrid = document.getElementById('metricsGrid');
-    const states = {
-      today: [
-        { label: 'IQA completion', value: '≈ 60 min', caption: 'Long forms; energy drifts.' },
-        { label: 'Turnaround', value: '3–5 days', caption: 'Research lives in a queue.' },
-        { label: 'Conversion', value: 'Baseline', caption: 'Heavily rep‑dependent.' },
-        { label: 'Advisor load', value: 'High', caption: 'Research + orchestration.' }
-      ],
-      atom: [
-        { label: 'IQA completion', value: '20–25 min', caption: 'Shorter, more natural.' },
-        { label: 'Turnaround', value: '< 5 minutes', caption: 'Answer while you’re there.' },
-        { label: 'Conversion', value: '+ 20–25%', caption: 'Better timing + story.' },
-        { label: 'Advisor load', value: 'Lower', caption: 'System does heavy lifting.' }
-      ]
-    };
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
 
-    function renderMetrics(stateKey) {
-      if (!metricsGrid) return;
-      metricsGrid.innerHTML = '';
-      states[stateKey].forEach((m) => {
-        const div = document.createElement('div');
-        div.className = 'story-stat';
-        div.innerHTML = `
-          <div class="story-stat-label">${m.label}</div>
-          <div class="story-stat-value">${m.value}</div>
-          <div class="story-stat-caption">${m.caption}</div>
-        `;
-        metricsGrid.appendChild(div);
-      });
-    }
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
 
-    // Reuse hero stats area as metric canvas
-    const heroStats = document.querySelector('.story-grid');
-    heroStats.id = 'metricsGrid';
-    renderMetrics('today');
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
 
-    const toggleGroup = document.createElement('div');
-    toggleGroup.style.display = 'inline-flex';
-    toggleGroup.style.borderRadius = '999px';
-    toggleGroup.style.border = '1px solid #d1d5db';
-    toggleGroup.style.overflow = 'hidden';
-    toggleGroup.style.fontSize = '10px';
-    toggleGroup.style.marginTop = '8px';
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
 
-    toggleGroup.innerHTML = `
-      <button type="button" data-state="today" style="padding:4px 9px;border:none;background:#2563eb;color:#ffffff;font-weight:600;cursor:pointer;">Today</button>
-      <button type="button" data-state="atom" style="padding:4px 9px;border:none;background:transparent;color:#6b7280;cursor:pointer;">With ATOM</button>
-    `;
-    document.querySelector('.story-hero').appendChild(toggleGroup);
-
-    toggleGroup.addEventListener('click', (e) => {
-      const btn = e.target.closest('button');
-      if (!btn) return;
-      const state = btn.dataset.state;
-      if (!state) return;
-      const [b1, b2] = toggleGroup.querySelectorAll('button');
-      if (state === 'today') {
-        b1.style.background = '#2563eb'; b1.style.color = '#ffffff'; b1.style.fontWeight = '600';
-        b2.style.background = 'transparent'; b2.style.color = '#6b7280'; b2.style.fontWeight = '400';
-      } else {
-        b2.style.background = '#2563eb'; b2.style.color = '#ffffff'; b2.style.fontWeight = '600';
-        b1.style.background = 'transparent'; b1.style.color = '#6b7280'; b1.style.fontWeight = '400';
-      }
-      renderMetrics(state);
-    });
-
-    // Assistant
-    const qaPairs = [
-      {
-        q: /advisor|trusted advisor|rep|seller/i,
-        a:
-          "For a Trusted Advisor, the biggest change is emotional, not technical. Pathfinder stops feeling like a long intake followed by a black‑box wait. During the call, the system quietly lines up what to ask, what to show, and who is most likely to fit. When the customer says “what would you recommend?”, the advisor already has a clear, evidence‑backed answer instead of “let me get back to you.”"
-      },
-      {
-        q: /dynamic matrix|dynamic matrices|matrix/i,
-        a:
-          "Dynamic Matrices become the shared table in the room. As you gather requirements, the table fills in with providers and scores; as new needs emerge, the rows reshuffle. You can click into any cell and say “here’s exactly why this provider scores high on security and low on geographic coverage.” Then, when the call ends, Pathfinder has both an internal and customer version ready to go."
-      },
-      {
-        q: /atlas|data center|datacenter/i,
-        a:
-          "Atlas is how Pathfinder × ATOM stays credible in the most complex, global deals. Instead of clicking through filters under pressure, the advisor just asks real questions: who can do this in this region, with this certification, at this density. ATOM translates that into Atlas queries, applies hard filters first, and feeds the best candidates straight into Dynamic Matrices."
-      },
-      {
-        q: /roi|value|uplift|business case/i,
-        a:
-          "The story in numbers is simple: shorter IQAs, less research, better timing, and clearer recommendations. That combination increases how many opportunities get to “yes”, and how fast. In a 100‑rep environment, even modest improvements in close rate and cycle time compound into eight‑figure annual value, with a payback measured in quarters, not years."
-      },
-      {
-        q: /risk|hallucination|trust|adoption|fatigue/i,
-        a:
-          "Trust and adoption are solved in the design. Facts come from tables and documents that advisors already recognize; the model explains them, it doesn’t invent them. Signals are gated by confidence and can be turned down if advisors prefer a quieter co‑pilot. And the whole system assumes incomplete data at the start, improving as Pathfinder and Atlas coverage grows."
-      }
-    ];
-
-    function answerFromLocal(query) {
-      for (const pair of qaPairs) {
-        if (pair.q.test(query)) return pair.a;
-      }
-      return (
-        "In short: Pathfinder × ATOM keeps Pathfinder as the place where work happens, and layers on an agentic AI " +
-        "co‑pilot that listens, thinks, and drafts alongside your advisors. The customer feels like they are " +
-        "in a working session that ends with a real answer, not the start of a new waiting period."
-      );
-    }
-
-    const assistantInput = document.getElementById('assistantInput');
-    const assistantSendBtn = document.getElementById('assistantSendBtn');
-    const assistantTranscript = document.getElementById('assistantTranscript');
-
-    function appendMessage(role, text) {
-      const div = document.createElement('div');
-      div.style.marginTop = '4px';
-      div.innerHTML = '<strong>' + role + ':</strong> ' + text.replace(/\n/g, '<br />');
-      assistantTranscript.appendChild(div);
-      assistantTranscript.scrollTop = assistantTranscript.scrollHeight;
-    }
-
-    assistantSendBtn.addEventListener('click', () => {
-      const q = assistantInput.value.trim();
-      if (!q) return;
-      appendMessage('You', q);
-      assistantInput.value = '';
-      setTimeout(() => {
-        const a = answerFromLocal(q);
-        appendMessage('ATOM', a);
-      }, 220);
-    });
-
-    assistantInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') assistantSendBtn.click();
-    });
-  </script>
+        showSlide(0);
+    </script>
 </body>
 </html>
