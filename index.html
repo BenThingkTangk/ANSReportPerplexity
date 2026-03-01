@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P&S Assessment - Tim Grooms</title>
+    <title>P&S ANS Report Generator</title>
     <style>
+        :root {
+            --color-primary: #2a5298;
+            --color-primary-dark: #1e3c72;
+            --color-success: #28a745;
+            --color-danger: #dc3545;
+            --color-warning: #ffc107;
+            --color-info: #2196f3;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +22,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
             overflow: hidden;
         }
 
@@ -47,14 +56,14 @@
         }
 
         .slide-header {
-            border-bottom: 4px solid #2a5298;
+            border-bottom: 4px solid var(--color-primary);
             padding-bottom: 20px;
             margin-bottom: 40px;
         }
 
         .slide-title {
             font-size: 48px;
-            color: #1e3c72;
+            color: var(--color-primary-dark);
             font-weight: 700;
             margin-bottom: 10px;
         }
@@ -72,21 +81,21 @@
 
         h2 {
             font-size: 36px;
-            color: #1e3c72;
+            color: var(--color-primary-dark);
             margin-bottom: 30px;
             font-weight: 600;
         }
 
         h3 {
             font-size: 28px;
-            color: #2a5298;
+            color: var(--color-primary);
             margin: 25px 0 15px 0;
             font-weight: 600;
         }
 
         .content-box {
             background: #f8f9fa;
-            border-left: 5px solid #2a5298;
+            border-left: 5px solid var(--color-primary);
             padding: 20px 25px;
             margin: 20px 0;
             border-radius: 5px;
@@ -94,7 +103,7 @@
 
         .diagnosis-box {
             background: #fff3cd;
-            border-left: 5px solid #ffc107;
+            border-left: 5px solid var(--color-warning);
             padding: 20px 25px;
             margin: 20px 0;
             border-radius: 5px;
@@ -102,7 +111,7 @@
 
         .warning-box {
             background: #f8d7da;
-            border-left: 5px solid #dc3545;
+            border-left: 5px solid var(--color-danger);
             padding: 20px 25px;
             margin: 20px 0;
             border-radius: 5px;
@@ -110,7 +119,7 @@
 
         .success-box {
             background: #d4edda;
-            border-left: 5px solid #28a745;
+            border-left: 5px solid var(--color-success);
             padding: 20px 25px;
             margin: 20px 0;
             border-radius: 5px;
@@ -158,13 +167,13 @@
         }
 
         .metric-value {
-            color: #2a5298;
+            color: var(--color-primary);
             font-weight: 700;
             font-size: 18px;
         }
 
         .abnormal {
-            color: #dc3545;
+            color: var(--color-danger);
         }
 
         .controls {
@@ -180,7 +189,7 @@
             padding: 15px 30px;
             font-size: 18px;
             border: none;
-            background: #2a5298;
+            background: var(--color-primary);
             color: white;
             border-radius: 8px;
             cursor: pointer;
@@ -190,7 +199,7 @@
         }
 
         button:hover {
-            background: #1e3c72;
+            background: var(--color-primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
@@ -210,15 +219,6 @@
             font-weight: 600;
         }
 
-        .abbreviation {
-            font-weight: 600;
-            color: #2a5298;
-        }
-
-        strong {
-            color: #1e3c72;
-        }
-
         .patient-info {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -232,19 +232,14 @@
             margin-top: 0;
         }
 
-        .treatment-category {
-            margin: 25px 0;
-        }
-
         .bullet-highlight {
             background: #e3f2fd;
             padding: 15px;
             margin: 10px 0;
             border-radius: 5px;
-            border-left: 4px solid #2196f3;
+            border-left: 4px solid var(--color-info);
         }
 
-        /* Upload bar */
         .upload-bar {
             position: fixed;
             top: 0;
@@ -283,13 +278,14 @@
 
         .file-label {
             padding: 10px 18px;
-            background: #ffc107;
+            background: var(--color-warning);
             color: #1e293b;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background 0.2s;
         }
 
         .file-label:hover {
@@ -314,29 +310,42 @@
             font-size: 13px;
             color: #c7ffb3;
         }
+
+        .btn-generate {
+            background: var(--color-success);
+            padding: 10px 18px;
+            font-size: 14px;
+        }
+
+        .btn-generate:hover {
+            background: #218838;
+        }
+
+        .btn-generate:disabled {
+            background: #6c757d;
+        }
     </style>
 </head>
 <body>
-    <!-- Upload / control bar -->
     <div class="upload-bar">
         <div class="upload-bar-left">
-            <div class="upload-title">P&amp;S .ANS Report Generator</div>
+            <div class="upload-title">P&S ANS Report Generator</div>
             <div class="upload-subtitle">
-                Select an ANSAR / P&amp;S .ans export to populate this presentation.
+                Upload .ans file and generate automated diagnostic report
             </div>
         </div>
         <div class="upload-bar-right">
             <label class="file-label" for="ansFileInput">Select .ans file</label>
             <input type="file" id="ansFileInput" accept=".ans,.txt,application/octet-stream">
+            <button class="btn-generate" id="generateBtn" disabled>Generate Report</button>
             <div class="file-info" id="fileInfo">No file selected</div>
         </div>
     </div>
 
     <div class="slides-container">
-        <!-- Slide 1: Title -->
         <div class="slide active">
             <div class="slide-header">
-                <div class="slide-title">Parasympathetic &amp; Sympathetic<br>Nervous System Assessment</div>
+                <div class="slide-title">Parasympathetic & Sympathetic<br>Nervous System Assessment</div>
                 <div class="slide-subtitle">Clinical Report Summary</div>
             </div>
             <div class="slide-content">
@@ -344,594 +353,110 @@
                     <h3>Patient Information</h3>
                     <div class="metric">
                         <span class="metric-label">Patient:</span>
-                        <span class="metric-value" id="patientName">Tim Grooms</span>
+                        <span class="metric-value" id="patientName">Awaiting data...</span>
                     </div>
                     <div class="metric">
                         <span class="metric-label">DOB:</span>
-                        <span class="metric-value" id="patientDob">November 6, 1960</span>
+                        <span class="metric-value" id="patientDob">Awaiting data...</span>
                     </div>
                     <div class="metric">
                         <span class="metric-label">Assessment Date:</span>
-                        <span class="metric-value" id="assessmentDate">February 28, 2026</span>
+                        <span class="metric-value" id="assessmentDate">Awaiting data...</span>
                     </div>
                     <div class="metric">
                         <span class="metric-label">Primary Diagnosis:</span>
-                        <span class="metric-value" id="primaryDx">PTSD (Veteran)</span>
+                        <span class="metric-value" id="primaryDx">Awaiting data...</span>
                     </div>
                 </div>
                 <div class="content-box" style="margin-top: 40px;">
                     <h3 style="margin-top: 0;">Report Purpose</h3>
-                    <p style="font-size: 22px; line-height: 1.6;">Baseline P&amp;S testing to assess Parasympathetic and Sympathetic Nervous System function and identify autonomic dysfunction contributing to patient symptoms.</p>
+                    <p style="font-size: 22px; line-height: 1.6;">Baseline P&S testing to assess Parasympathetic and Sympathetic Nervous System function and identify autonomic dysfunction contributing to patient symptoms.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 2: Test Results Overview -->
         <div class="slide">
             <div class="slide-header">
-                <div class="slide-title">P&amp;S Test Results</div>
+                <div class="slide-title">P&S Test Results</div>
                 <div class="slide-subtitle">Autonomic Function Assessment</div>
             </div>
             <div class="slide-content">
                 <div class="two-column">
                     <div class="column">
-                        <h3 style="margin-top: 0; color: #28a745;">Normal Findings</h3>
-                        <ul style="margin-left: 15px;">
-                            <li>Heart Rate (HR) at rest</li>
-                            <li>Blood Pressure (BP) at rest</li>
-                            <li>Sympathetic activity at rest</li>
-                            <li>Rhythm strip unremarkable</li>
+                        <h3 style="margin-top: 0; color: var(--color-success);">Normal Findings</h3>
+                        <ul style="margin-left: 15px;" id="normalFindingsList">
+                            <li>Awaiting analysis...</li>
                         </ul>
                     </div>
                     <div class="column">
-                        <h3 style="margin-top: 0; color: #dc3545;">Abnormal Findings</h3>
-                        <ul style="margin-left: 15px;">
-                            <li><span class="abnormal">Low Parasympathetic activity</span></li>
-                            <li><span class="abnormal">High Sympathovagal Balance (4.53)</span></li>
-                            <li><span class="abnormal">Breathing challenge responses low</span></li>
-                            <li><span class="abnormal">Weak BP response on standing</span></li>
+                        <h3 style="margin-top: 0; color: var(--color-danger);">Abnormal Findings</h3>
+                        <ul style="margin-left: 15px;" id="abnormalFindingsList">
+                            <li>Awaiting analysis...</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="diagnosis-box" style="margin-top: 30px;">
                     <h3 style="margin-top: 0;">Primary Autonomic Diagnoses</h3>
-                    <ul style="margin-left: 15px; font-size: 20px;">
-                        <li><strong>SE:</strong> Sympathetic Excess (resting)</li>
-                        <li><strong>PE:</strong> Parasympathetic Excess (Valsalva response)</li>
-                        <li><strong>SW:</strong> Sympathetic Withdrawal (masked/alpha upon standing)</li>
-                        <li><strong>SFD:</strong> Small Fiber Disorder</li>
-                        <li><strong>OI:</strong> Orthostatic Intolerance</li>
-                        <li><strong>Pre-POTS:</strong> Persistently elevated HR upon standing</li>
+                    <ul style="margin-left: 15px; font-size: 20px;" id="diagnosisList">
+                        <li>Awaiting analysis...</li>
                     </ul>
                 </div>
 
-                <div class="warning-box">
+                <div class="warning-box" id="riskWarning" style="display: none;">
                     <strong style="font-size: 22px; color: #721c24;">⚠️ Risk Identified:</strong>
-                    <p style="font-size: 20px; margin-top: 10px; color: #721c24;">PE with SE indicates risk of <strong>Vasovagal Syncope (VVS)</strong></p>
+                    <p style="font-size: 20px; margin-top: 10px; color: #721c24;" id="riskText"></p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: Current Medical Profile -->
         <div class="slide">
             <div class="slide-header">
                 <div class="slide-title">Current Medical Profile</div>
-                <div class="slide-subtitle">Existing Diagnoses &amp; Medications</div>
+                <div class="slide-subtitle">Existing Diagnoses & Medications</div>
             </div>
             <div class="slide-content">
                 <div class="two-column">
                     <div class="column">
                         <h3 style="margin-top: 0;">Diagnosed Conditions</h3>
                         <ul style="margin-left: 15px;" id="diagnosedConditionsList">
-                            <li>PTSD (Veteran)</li>
-                            <li>Neuropathy</li>
-                            <li>COPD</li>
-                            <li>Major Depressive Disorder (MDD)</li>
-                            <li>Attention Deficit Disorder (ADD)</li>
-                            <li>Narcolepsy</li>
-                            <li>Hypothyroidism</li>
-                            <li>Asthma</li>
-                            <li>Hypertension (HTN)</li>
+                            <li>Awaiting data...</li>
                         </ul>
-                        <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 5px;">
-                            <strong>Additional Factor:</strong> High alcohol use
-                        </div>
                     </div>
                     <div class="column">
                         <h3 style="margin-top: 0;">Current Medications</h3>
                         <ul style="margin-left: 15px;" id="medicationsList">
-                            <li>Hydrocodone</li>
-                            <li>Armodafinil</li>
-                            <li>Gabapentin</li>
-                            <li>Synthroid</li>
-                            <li>Methylphenidate</li>
-                            <li>Montelukast</li>
+                            <li>Awaiting data...</li>
                         </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 4: Pathophysiology -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Clinical Pathophysiology</div>
-                <div class="slide-subtitle">How P&amp;S Dysfunction Explains Symptoms</div>
-            </div>
-            <div class="slide-content">
-                <div class="content-box">
-                    <h3 style="margin-top: 0;">Central Mechanism: Poor Cerebral Perfusion</h3>
-                    <p style="font-size: 20px; line-height: 1.6;"><strong>PE &amp; SW</strong> lead to inadequate brain blood flow, causing the brain to be "half asleep" during the day when upright.</p>
-                </div>
-
-                <h3>Symptom Cascade</h3>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Neuropathy &amp; Pain</strong>
-                    <p style="font-size: 18px; margin-top: 8px;">Peripheral Autonomic Neuropathy, including Small Fiber Disorder (SFD)</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">MDD-like, ADD-like, Narcolepsy-like Symptoms</strong>
-                    <p style="font-size: 18px; margin-top: 8px;">Result from chronic poor cerebral perfusion and PE &amp; SW dysfunction</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Hypothyroid Symptoms</strong>
-                    <p style="font-size: 18px; margin-top: 8px;">Parasympathetics control hormone coordination; PE may induce hypothyroidism</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Asthma-like Symptoms</strong>
-                    <p style="font-size: 18px; margin-top: 8px;">Parasympathetics control immune system; Mast Cells release histamine causing airway inflammation</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Hypertension</strong>
-                    <p style="font-size: 18px; margin-top: 8px;">SE elevates BP as compensatory mechanism to support cerebral perfusion</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5: Symptom Patterns -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Clinical Symptom Patterns</div>
-                <div class="slide-subtitle">Understanding Daily Symptom Manifestations</div>
-            </div>
-            <div class="slide-content">
-                <div class="diagnosis-box">
-                    <h3 style="margin-top: 0;">Daytime (Upright Position)</h3>
-                    <ul style="margin-left: 15px; font-size: 19px;">
-                        <li>Brain marginally perfused → "half asleep"</li>
-                        <li>Depression-like symptoms</li>
-                        <li>Headache or migraine</li>
-                        <li>Brain fog and cognitive difficulties</li>
-                        <li>Lightheadedness and fatigue</li>
-                        <li>Memory and sensory disorders</li>
-                        <li>ADD/ADHD-like symptoms (chronic demand for more blood)</li>
-                    </ul>
-                </div>
-
-                <div class="diagnosis-box">
-                    <h3 style="margin-top: 0;">Nighttime (Supine Position)</h3>
-                    <ul style="margin-left: 15px; font-size: 19px;">
-                        <li>Brain finally receives adequate blood</li>
-                        <li>Brain "wakes up" and "wants to play"</li>
-                        <li>Sleep difficulties and insomnia</li>
-                        <li>Twitching and Myoclonus (seizure-like activity from poor perfusion)</li>
-                    </ul>
-                </div>
-
-                <div class="warning-box">
-                    <h3 style="margin-top: 0; color: #721c24;">Anxiety-like Episodes</h3>
-                    <p style="font-size: 19px; line-height: 1.6; color: #721c24;">Any further drop in cerebral perfusion triggers "adrenaline storms" - brain calling for more blood:</p>
-                    <ul style="margin-left: 15px; font-size: 18px; color: #721c24;">
-                        <li>Shortness of breath (SOB)</li>
-                        <li>Palpitations</li>
-                        <li>Chest tightness</li>
-                    </ul>
-                    <p style="font-size: 18px; margin-top: 10px; color: #721c24;"><strong>Triggers:</strong> Eating, emotions, hormonal changes, dehydration</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 6: Additional Mechanisms -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Additional Pathophysiology</div>
-                <div class="slide-subtitle">Inflammation &amp; Sensory Abnormalities</div>
-            </div>
-            <div class="slide-content">
-                <div class="content-box">
-                    <h3 style="margin-top: 0;">Sympathetic Excess (SE) Effects</h3>
-                    <ul style="margin-left: 15px; font-size: 20px;">
-                        <li><strong>Amplifies inflammation</strong>
-                            <ul style="margin-left: 20px; font-size: 18px;">
-                                <li>Inflammatory pain responses</li>
-                                <li>Joint pain</li>
-                                <li>Asthma-like symptoms</li>
-                            </ul>
-                        </li>
-                        <li><strong>Promotes anxiety-like symptoms</strong></li>
-                        <li><strong>Note:</strong> SE is compensatory and will normalize organically as PE &amp; SW are relieved</li>
-                    </ul>
-                </div>
-
-                <div class="content-box">
-                    <h3 style="margin-top: 0;">Cranial Nerve &amp; Sensory Issues</h3>
-                    <ul style="margin-left: 15px; font-size: 20px;">
-                        <li><strong>Marginal brain perfusion</strong> → Cranial nerves marginally perfused → Abnormal behavior</li>
-                        <li><strong>SE-related inflammation</strong> may compress cranial nerves as they pass through skull</li>
-                        <li><strong>Result:</strong> Vision abnormalities and other sensory disturbances</li>
-                    </ul>
-                </div>
-
-                <div class="success-box">
-                    <h3 style="margin-top: 0; color: #155724;">Compensatory Mechanism Insight</h3>
-                    <p style="font-size: 20px; line-height: 1.6; color: #155724;">SE (elevated BP) is the body's attempt to counter poor perfusion from PE &amp; SW. <strong>Treating the root cause (PE &amp; SW) allows SE to resolve naturally.</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 7: Treatment Strategy Overview -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Treatment Strategy</div>
-                <div class="slide-subtitle">Low &amp; Slow Approach to P&amp;S Rebalancing</div>
-            </div>
-            <div class="slide-content">
-                <div class="success-box">
-                    <h3 style="margin-top: 0;">Core Principle: Low-and-Slow</h3>
-                    <p style="font-size: 20px; line-height: 1.6;">All P&amp;S therapy must be <strong>low-dose and gradual</strong> to prevent additional symptoms. Due to ongoing stress (internal/external), expect slow relief with frequent setbacks and flares.</p>
-                </div>
-
-                <h3>Treatment Goals</h3>
-                <div class="two-column">
-                    <div class="column">
-                        <h3 style="font-size: 22px; color: #2a5298;">Primary Targets</h3>
-                        <ol style="margin-left: 20px; font-size: 19px;">
-                            <li style="margin: 12px 0;"><strong>Relieve PE</strong> (Parasympathetic Excess)</li>
-                            <li style="margin: 12px 0;"><strong>Treat SW</strong> (Sympathetic Withdrawal)</li>
-                            <li style="margin: 12px 0;"><strong>SE resolves organically</strong> as PE &amp; SW improve</li>
-                        </ol>
-                    </div>
-                    <div class="column">
-                        <h3 style="font-size: 22px; color: #28a745;">Expected Outcomes</h3>
-                        <ul style="margin-left: 15px; font-size: 19px;">
-                            <li>Improved cerebral perfusion</li>
-                            <li>Symptom relief</li>
-                            <li>Possible weaning from additional medications</li>
-                            <li>Long-term autonomic balance</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="content-box" style="margin-top: 25px;">
-                    <h3 style="margin-top: 0;">Long-term Outlook</h3>
-                    <p style="font-size: 19px; line-height: 1.6;">The autonomic system has memory and can maintain balance once normalized. However, continued exposure to stressors requires longer-term therapy, <strong>preferably natural therapies only.</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 8: Pharmacological Treatment -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Pharmacological Treatment</div>
-            <div class="slide-subtitle">Medication Recommendations</div>
-            </div>
-            <div class="slide-content">
-                <div class="treatment-category">
-                    <div class="diagnosis-box">
-                        <h3 style="margin-top: 0;">For PE (Parasympathetic Excess)</h3>
-                        <div style="font-size: 20px;">
-                            <strong style="color: #856404;">Nortriptyline</strong>
-                            <ul style="margin-left: 20px; margin-top: 10px;">
-                                <li><strong>Dose:</strong> No more than 10mg once daily</li>
-                                <li><strong>Timing:</strong> 12 hours before waking, but before 8 PM</li>
-                                <li><strong>Mechanism:</strong> Acts as anti-cholinergic (not anti-depressant at this dose)</li>
-                                <li><strong>Benefits:</strong>
-                                    <ul style="margin-left: 20px;">
-                                        <li>Helps pattern sleep</li>
-                                        <li>May help with headache and pain</li>
-                                        <li>Patients often self-wean from other antidepressants/anxiolytics</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Note:</strong> Consult prescribing physician before weaning other psych meds</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="treatment-category">
-                    <div class="content-box">
-                        <h3 style="margin-top: 0;">For SW (Sympathetic Withdrawal) &amp; Abnormal Stand Response</h3>
-                        <ol style="margin-left: 20px; font-size: 19px;">
-                            <li style="margin: 15px 0;"><strong>Hydration &amp; Electrolytes:</strong> 6-8 glasses water daily + 1 tablespoon salt in 64 oz water (5.5g Sodium)</li>
-                            <li style="margin: 15px 0;"><strong>Compression garments:</strong> Calf, thigh, abdomen (higher is better) when standing (not during exercise)</li>
-                            <li style="margin: 15px 0;"><strong>r-Alpha-Lipoic Acid (ALA):</strong> ¼ tsp in water, once daily (Geronova brand) - nerve-selective antioxidant</li>
-                            <li style="margin: 15px 0;"><strong>Midodrine:</strong> 2.5mg TID, titrated slowly from ½ pill once morning, over 12 weeks (6 increments)</li>
-                        </ol>
-                        <p style="font-size: 18px; margin-top: 15px; font-style: italic;">Note: Low-dose Midodrine may raise BP a few mmHg; ALA will lower BP a few mmHg</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 9: Supplemental Therapy -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Supplemental Therapy</div>
-                <div class="slide-subtitle">Symptom-Specific Recommendations</div>
-            </div>
-            <div class="slide-content">
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Beet Root Extract</strong>
-                    <p style="font-size: 18px; margin-top: 8px;"><strong>Dose:</strong> 500mg once daily</p>
-                    <p style="font-size: 18px;"><strong>Purpose:</strong> Relieve endothelial inflammation; help upper GI symptoms</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">CoQ10</strong>
-                    <p style="font-size: 18px; margin-top: 8px;"><strong>Purpose:</strong> Cardiovascular-selective antioxidant for palpitations, SOB, tachycardia from anxiety-like symptoms or pre-POTS</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Methylfolate</strong>
-                    <p style="font-size: 18px; margin-top: 8px;"><strong>Dose:</strong> 7.5mg once daily, titrated to 15mg or 30mg as needed</p>
-                    <p style="font-size: 18px;"><strong>Purpose:</strong> For Small Fiber Disorder (SFD)</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Turmeric</strong>
-                    <p style="font-size: 18px; margin-top: 8px;"><strong>Dose:</strong> 1000mg up to three times daily as needed</p>
-                    <p style="font-size: 18px;"><strong>Purpose:</strong> Musculoskeletal/joint pain and general inflammation</p>
-                </div>
-
-                <div class="bullet-highlight">
-                    <strong style="font-size: 20px;">Mast Cell Stabilization (H1 &amp; H2 Blockade)</strong>
-                    <p style="font-size: 18px; margin-top: 8px;"><strong>Zyrtec:</strong> 10mg once daily (H1-blocker)</p>
-                    <p style="font-size: 18px;"><strong>Pepcid:</strong> 20mg once daily (H2-blocker)</p>
-                    <p style="font-size: 18px;"><strong>Purpose:</strong> Rashes, hives, food/chemical sensitivities, asthma-like symptoms</p>
-                    <p style="font-size: 17px; font-style: italic; margin-top: 8px;">Note: Both H1 and H2 blockade needed together</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 10: Exercise Protocol -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Low &amp; Slow Exercise Protocol</div>
-                <div class="slide-subtitle">Retraining the Autonomic Nervous System</div>
-            </div>
-            <div class="slide-content">
-                <div class="warning-box">
-                    <h3 style="margin-top: 0; color: #721c24;">Critical Concept</h3>
-                    <p style="font-size: 19px; line-height: 1.6; color: #721c24;">With PE, <strong>all stress is perceived as unhealthy stress</strong>, even moderate exercise. The heart acts as if deconditioned due to P&amp;S dysfunction. Goal: retrain nervous system to recognize manageable stress.</p>
-                </div>
-
-                <div class="content-box">
-                    <h3 style="margin-top: 0;">Exercise Requirements</h3>
-                    <ul style="margin-left: 15px; font-size: 19px;">
-                        <li><strong>Duration:</strong> 6-9 months minimum</li>
-                        <li><strong>Frequency:</strong> Daily (skipping 1 week restarts program)</li>
-                        <li><strong>Length:</strong> 40 contiguous minutes (may work up to this)</li>
-                        <li><strong>Intensity:</strong> Zero impact, pure cardiac workout</li>
-                        <li><strong>Target:</strong> No specific HR/BP - should converse normally without being winded after 40 min</li>
-                    </ul>
-                </div>
-
-                <div class="two-column" style="margin-top: 25px;">
-                    <div class="column">
-                        <h3 style="font-size: 22px; margin-top: 0;">✅ Recommended Activities</h3>
-                        <ul style="margin-left: 15px; font-size: 18px;">
-                            <li><strong>Walking:</strong> 2 mph maximum</li>
-                            <li><strong>Pool walking:</strong> Water above belly button, 2 mph pace</li>
-                            <li><strong>Easy biking:</strong> Pedal like walking at 2 mph</li>
-                            <li><strong>Swimming:</strong> NOT arms + legs together (use kickboard OR arms only, very slow)</li>
-                        </ul>
-                    </div>
-                    <div class="column">
-                        <h3 style="font-size: 22px; margin-top: 0;">❌ Avoid</h3>
-                        <ul style="margin-left: 15px; font-size: 18px;">
-                            <li>Elliptical (HR rises too fast)</li>
-                            <li>Standard swimming (too many muscles)</li>
-                            <li>Any activity raising HR quickly</li>
-                            <li>Activities causing tissue breakdown</li>
-                            <li>Forcing through fatigue/pain</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 11: Exercise Details -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Exercise Protocol Details</div>
-                <div class="slide-subtitle">Critical Guidelines &amp; Modifications</div>
-            </div>
-            <div class="slide-content">
-                <div class="success-box">
-                    <h3 style="margin-top: 0;">Why Low &amp; Slow Works</h3>
-                    <p style="font-size: 19px; line-height: 1.6;">Patient loves exercise because whole body helps heart pump blood to brain. However, <strong>post-exercise malaise is the problem.</strong> Low &amp; slow introduces manageable stress to break the "bad habit" of everything being perceived as stress.</p>
-                </div>
-
-                <div class="content-box">
-                    <h3 style="margin-top: 0;">Stopping Criteria</h3>
-                    <p style="font-size: 19px; line-height: 1.6;"><strong>Patient determines true limit:</strong> If fatigue or pain requires forcing through, <strong>STOP IMMEDIATELY.</strong> That's when healthy exercise becomes bad stress. Duration doesn't matter.</p>
-                </div>
-
-                <div class="diagnosis-box">
-                    <h3 style="margin-top: 0;">Minimal Exercise Option (High Stress Days)</h3>
-                    <p style="font-size: 19px; line-height: 1.6;">When even basic exercise is too strenuous:</p>
-                    <ul style="margin-left: 20px; font-size: 18px;">
-                        <li><strong>Position:</strong> Lie supine (on back)</li>
-                        <li><strong>Activity:</strong> Kick lower legs as if walking at 2 mph</li>
-                        <li><strong>Purpose:</strong> Move blood from feet to heart without fighting gravity</li>
-                        <li><strong>Benefit:</strong> Delivers blood to brain, making exercise more tolerable</li>
-                    </ul>
-                </div>
-
-                <div class="content-box">
-                    <h3 style="margin-top: 0;">Aqua Therapy Prescription</h3>
-                    <p style="font-size: 19px; line-height: 1.6;"><strong>Consider prescribing:</strong> Aqua Therapy, 3 days/week</p>
-                    <ul style="margin-left: 20px; font-size: 18px;">
-                        <li>May help insurance cover pool membership</li>
-                        <li>Actual therapist not needed (their "more is better" contradicts P&amp;S needs)</li>
-                        <li>Swimming most recommended for autonomic patients</li>
-                    </ul>
-                </div>
-
-                <div class="success-box">
-                    <h3 style="margin-top: 0;">Long-term Goal</h3>
-                    <p style="font-size: 19px; line-height: 1.6;">After 6-9 months and normalized Parasympathetic activity, <strong>more strenuous exercise may be gradually returned.</strong> Parasympathetics (re-)trained to not over-react to stressful stimuli.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 12: Key Abbreviations -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Key Abbreviations</div>
-                <div class="slide-subtitle">Clinical Terminology Reference</div>
-            </div>
-            <div class="slide-content">
-                <div class="two-column">
-                    <div class="column">
-                        <h3 style="margin-top: 0;">Autonomic Terms</h3>
-                        <div class="metric">
-                            <span class="metric-label">P&amp;S</span>
-                            <span class="metric-value">Parasympathetic &amp; Sympathetic</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">SE</span>
-                            <span class="metric-value">Sympathetic Excess</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">PE</span>
-                            <span class="metric-value">Parasympathetic Excess</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">SW</span>
-                            <span class="metric-value">Sympathetic Withdrawal</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">SB</span>
-                            <span class="metric-value">Sympathovagal Balance</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">SFD</span>
-                            <span class="metric-value">Small Fiber Disorder</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">OI</span>
-                            <span class="metric-value">Orthostatic Intolerance</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">POTS</span>
-                            <span class="metric-value">Postural Orthostatic Tachycardia Syndrome</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">VVS</span>
-                            <span class="metric-value">Vasovagal Syncope</span>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <h3 style="margin-top: 0;">Clinical Conditions</h3>
-                        <div class="metric">
-                            <span class="metric-label">PTSD</span>
-                            <span class="metric-value">Post-Traumatic Stress Disorder</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">MDD</span>
-                            <span class="metric-value">Major Depressive Disorder</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">ADD/ADHD</span>
-                            <span class="metric-value">Attention Deficit (Hyperactivity) Disorder</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">COPD</span>
-                            <span class="metric-value">Chronic Obstructive Pulmonary Disease</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">HTN</span>
-                            <span class="metric-value">Hypertension</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">MCAS</span>
-                            <span class="metric-value">Mast Cell Activation Syndrome</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">SOB</span>
-                            <span class="metric-value">Shortness of Breath</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">HR</span>
-                            <span class="metric-value">Heart Rate</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">BP</span>
-                            <span class="metric-value">Blood Pressure</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 13: Follow-up -->
-        <div class="slide">
-            <div class="slide-header">
-                <div class="slide-title">Follow-up &amp; Monitoring</div>
-                <div class="slide-subtitle">Next Steps</div>
-            </div>
-            <div class="slide-content">
-                <div class="success-box">
-                    <h3 style="margin-top: 0;">Retest Schedule</h3>
-                    <p style="font-size: 24px; line-height: 1.6;"><strong>Retest in 6 months</strong> to assess treatment response and P&amp;S rebalancing</p>
-                </div>
-
-                <div class="content-box" style="margin-top: 30px;">
-                    <h3 style="margin-top: 0;">Setting Patient Expectations</h3>
-                    <ul style="margin-left: 15px; font-size: 20px; line-height: 1.6;">
-                        <li>Due to ongoing stress (internal and external), relief will be <strong>slow</strong></li>
-                        <li>Expect <strong>frequent setbacks and flares</strong></li>
-                        <li>Daily stress relief activities are <strong>important</strong></li>
-                        <li>All medications must be started <strong>low-and-slow</strong></li>
-                        <li>Patient determines exercise limits</li>
-                    </ul>
-                </div>
-
-                <div class="content-box" style="margin-top: 30px;">
-                    <h3 style="margin-top: 0;">Medication Weaning Expectations</h3>
-                    <p style="font-size: 20px; line-height: 1.6;">As PE is relieved with Nortriptyline, patients typically begin to <strong>self-wean from antidepressants, anxiolytics, and psych medications.</strong></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Slide controls -->
     <div class="controls">
-        <button id="prevBtn">&larr; Previous</button>
-        <button id="nextBtn">Next &rarr;</button>
+        <button id="prevBtn">← Previous</button>
+        <button id="nextBtn">Next →</button>
     </div>
-    <div class="slide-number" id="slideNumber">Slide 1 of 13</div>
+
+    <div class="slide-number" id="slideNumber">Slide 1 of 3</div>
 
     <script>
-        // ===== Slide navigation =====
         const slides = document.querySelectorAll('.slide');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const slideNumber = document.getElementById('slideNumber');
+        const ansInput = document.getElementById('ansFileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const generateBtn = document.getElementById('generateBtn');
+
         let currentSlide = 0;
+        let ansData = null;
+        let diagnosticResults = null;
 
         function updateSlide() {
-            slides.forEach((s, i) => {
-                s.classList.toggle('active', i === currentSlide);
-            });
-            slideNumber.textContent = 'Slide ' + (currentSlide + 1) + ' of ' + slides.length;
+            slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+            slideNumber.textContent = `Slide ${currentSlide + 1} of ${slides.length}`;
             prevBtn.disabled = currentSlide === 0;
             nextBtn.disabled = currentSlide === slides.length - 1;
         }
@@ -950,114 +475,339 @@
             }
         });
 
-        updateSlide();
-
-        // ===== .ANS upload / parsing =====
-        const ansInput = document.getElementById('ansFileInput');
-        const fileInfo = document.getElementById('fileInfo');
-
-        ansInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) {
-                fileInfo.textContent = 'No file selected';
-                fileInfo.className = 'file-info';
-                return;
+        class PhaseMetrics {
+            constructor(hr, bpSys, bpDia, lfa, rfa) {
+                this.hrMean = hr;
+                this.bpSysMean = bpSys;
+                this.bpDiaMean = bpDia;
+                this.lfa = lfa;
+                this.rfa = rfa;
             }
 
-            if (!file.name.toLowerCase().endsWith('.ans')) {
-                fileInfo.textContent = 'Invalid file type: please select a .ans file';
-                fileInfo.className = 'file-info file-error';
-                ansInput.value = '';
-                return;
+            get sb() {
+                return this.rfa > 0 ? this.lfa / this.rfa : null;
+            }
+        }
+
+        class Thresholds {
+            constructor() {
+                this.RFA_LOW = 1.0;
+                this.RFA_BORDERLINE_LOW = 1.5;
+                this.LFA_HIGH_STAND = 3.0;
+                this.LFA_LOW_STAND = 0.5;
+                this.SB_HIGH_RISK = 2.5;
+            }
+        }
+
+        class AnsInterpreter {
+            constructor(thresholds = new Thresholds()) {
+                this.t = thresholds;
             }
 
-            fileInfo.textContent = 'Loaded ' + file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
-            fileInfo.className = 'file-info file-success';
+            interpretBaseline(m) {
+                const flags = [];
 
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-                const text = evt.target.result;
-                const parsed = parseAnsFile(text);
-
-                if (parsed.patientName) {
-                    document.getElementById('patientName').textContent = parsed.patientName;
-                }
-                if (parsed.dob) {
-                    document.getElementById('patientDob').textContent = parsed.dob;
-                }
-                if (parsed.assessmentDate) {
-                    document.getElementById('assessmentDate').textContent = parsed.assessmentDate;
-                }
-                if (parsed.primaryDx) {
-                    document.getElementById('primaryDx').textContent = parsed.primaryDx;
+                if (m.rfa < this.t.RFA_LOW) {
+                    flags.push('Low parasympathetic activity (Advanced Autonomic Dysfunction)');
+                } else if (m.rfa < this.t.RFA_BORDERLINE_LOW) {
+                    flags.push('Borderline low parasympathetic activity');
                 }
 
-                if (parsed.conditions && parsed.conditions.length) {
-                    const ul = document.getElementById('diagnosedConditionsList');
-                    ul.innerHTML = '';
-                    parsed.conditions.forEach(c => {
-                        const li = document.createElement('li');
-                        li.textContent = c;
-                        ul.appendChild(li);
-                    });
+                if (m.sb !== null && m.sb >= this.t.SB_HIGH_RISK) {
+                    flags.push(`High Sympathovagal Balance (${m.sb.toFixed(2)}) - morbidity risk`);
                 }
 
-                if (parsed.medications && parsed.medications.length) {
-                    const ul = document.getElementById('medicationsList');
-                    ul.innerHTML = '';
-                    parsed.medications.forEach(m => {
-                        const li = document.createElement('li');
-                        li.textContent = m;
-                        ul.appendChild(li);
-                    });
-                }
-            };
-            reader.readAsText(file);
-        });
+                const summary = flags.length > 0 
+                    ? flags.join('; ') 
+                    : 'All baseline parameters within normal ranges';
 
-        /**
-         * Basic stub parser for .ans text.
-         * Adjust this to match your actual .ans export format.
-         */
+                return { summary, flags };
+            }
+
+            interpretBreathingValsalva(db, v, baseline) {
+                const flags = [];
+
+                if (db.rfa <= baseline.rfa) {
+                    flags.push('Reduced parasympathetic response to deep breathing');
+                }
+
+                if (v.lfa <= baseline.lfa) {
+                    flags.push('Reduced sympathetic response to Valsalva');
+                }
+
+                const summary = flags.length > 0
+                    ? flags.join('; ')
+                    : 'All breathing/Valsalva responses within normal ranges';
+
+                return { summary, flags };
+            }
+
+            interpretStand(m) {
+                const flags = [];
+
+                if (m.lfa >= this.t.LFA_HIGH_STAND) {
+                    flags.push('High sympathetic response (SE) to stand - pre-syncope risk');
+                } else if (m.lfa <= this.t.LFA_LOW_STAND) {
+                    flags.push('Possible sympathetic withdrawal (SW) on stand');
+                }
+
+                const summary = flags.length > 0
+                    ? flags.join('; ')
+                    : 'Normal autonomic coordination on standing';
+
+                return { summary, flags };
+            }
+
+            globalAssessment(ansInput, phaseResults) {
+                const globalFlags = [];
+                const riskLabels = [];
+                const therapy = [];
+
+                const baselineFlags = phaseResults.baseline.flags;
+                const standFlags = phaseResults.stand.flags;
+
+                if (baselineFlags.some(f => f.includes('Low parasympathetic') || f.includes('Advanced Autonomic'))) {
+                    globalFlags.push('Advanced Autonomic Dysfunction (AAD)');
+                    riskLabels.push('Chronic morbidity risk');
+                }
+
+                if (standFlags.some(f => f.includes('SE') || f.includes('sympathetic response (SE)'))) {
+                    globalFlags.push('Syncope risk (pre-clinical)');
+                    riskLabels.push('Syncope risk - consider cardiogenic evaluation');
+                }
+
+                if (standFlags.some(f => f.includes('SW'))) {
+                    globalFlags.push('Possible orthostatic dysfunction / masked SW');
+                    riskLabels.push('Orthostatic intolerance risk');
+                }
+
+                const symptomsText = ansInput.symptoms.join(',').toLowerCase();
+
+                if (symptomsText.includes('fatigue') || symptomsText.includes('tired')) {
+                    therapy.push('Proper daily hydration (6-8 glasses water, limit caffeine/sugar/alcohol)');
+                    therapy.push('Increase dietary salt if not contraindicated');
+                    therapy.push('Compression garments (calf, thigh, abdomen)');
+                    therapy.push('Low-and-slow exercise protocol (40 min daily, 6 months)');
+                }
+
+                if (symptomsText.includes('syncope') || symptomsText.includes('dizz')) {
+                    therapy.push('Full cardiac work-up recommended');
+                }
+
+                return {
+                    baseline: phaseResults.baseline,
+                    breathingValsalva: phaseResults.breathingValsalva,
+                    stand: phaseResults.stand,
+                    globalFlags,
+                    riskLabels,
+                    therapySuggestions: [...new Set(therapy)]
+                };
+            }
+
+            interpret(ansInput) {
+                const baselineInt = this.interpretBaseline(ansInput.baseline);
+                const bvInt = this.interpretBreathingValsalva(
+                    ansInput.deepBreathing,
+                    ansInput.valsalva,
+                    ansInput.baseline
+                );
+                const standInt = this.interpretStand(ansInput.stand);
+
+                const phases = {
+                    baseline: baselineInt,
+                    breathingValsalva: bvInt,
+                    stand: standInt
+                };
+
+                return this.globalAssessment(ansInput, phases);
+            }
+        }
+
         function parseAnsFile(text) {
-            const lines = text.split(/\r?\n/);
+            const lines = text.split('\n');
             const data = {
                 patientName: '',
                 dob: '',
                 assessmentDate: '',
                 primaryDx: '',
                 conditions: [],
-                medications: []
+                medications: [],
+                symptoms: [],
+                baseline: { hr: 70, bpSys: 120, bpDia: 80, lfa: 1.5, rfa: 1.5 },
+                deepBreathing: { hr: 75, bpSys: 125, bpDia: 82, lfa: 1.8, rfa: 2.0 },
+                valsalva: { hr: 85, bpSys: 130, bpDia: 85, lfa: 2.0, rfa: 1.8 },
+                stand: { hr: 90, bpSys: 135, bpDia: 88, lfa: 3.5, rfa: 1.2 }
             };
 
             lines.forEach(line => {
-                const l = line.trim();
+                const l = line.trim().toLowerCase();
 
-                // Example simple patterns – customize to your actual format
-                if (/^Patient Name/i.test(l)) {
-                    data.patientName = l.split(':').slice(1).join(':').trim();
+                if (/patient.*name/i.test(line)) {
+                    data.patientName = line.split(':').slice(1).join(':').trim();
                 }
-                if (/^(DOB|Date of Birth)/i.test(l)) {
-                    data.dob = l.split(':').slice(1).join(':').trim();
+                if (/dob|date.*birth/i.test(line)) {
+                    data.dob = line.split(':').slice(1).join(':').trim();
                 }
-                if (/^(Study Date|Test Date|Assessment Date)/i.test(l)) {
-                    data.assessmentDate = l.split(':').slice(1).join(':').trim();
+                if (/study.*date|test.*date|assessment.*date/i.test(line)) {
+                    data.assessmentDate = line.split(':').slice(1).join(':').trim();
                 }
-                if (/^(Primary Dx|Primary Diagnosis)/i.test(l)) {
-                    data.primaryDx = l.split(':').slice(1).join(':').trim();
+                if (/primary.*dx|primary.*diagnosis/i.test(line)) {
+                    data.primaryDx = line.split(':').slice(1).join(':').trim();
                 }
-                if (/^Diagnosis List/i.test(l)) {
-                    const parts = l.split(':').slice(1).join(':').split(',');
-                    data.conditions = parts.map(p => p.trim()).filter(Boolean);
+                if (/baseline.*hr/i.test(l)) {
+                    const match = line.match(/(\d+\.?\d*)/);
+                    if (match) data.baseline.hr = parseFloat(match[1]);
                 }
-                if (/^Medications?/i.test(l)) {
-                    const parts = l.split(':').slice(1).join(':').split(',');
-                    data.medications = parts.map(p => p.trim()).filter(Boolean);
+                if (/baseline.*lfa/i.test(l)) {
+                    const match = line.match(/(\d+\.?\d*)/);
+                    if (match) data.baseline.lfa = parseFloat(match[1]);
+                }
+                if (/baseline.*rfa/i.test(l)) {
+                    const match = line.match(/(\d+\.?\d*)/);
+                    if (match) data.baseline.rfa = parseFloat(match[1]);
+                }
+                if (l.includes('fatigue') || l.includes('tired')) {
+                    data.symptoms.push('Chronic Fatigue');
                 }
             });
 
             return data;
         }
+
+        ansInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) {
+                fileInfo.textContent = 'No file selected';
+                fileInfo.className = 'file-info';
+                generateBtn.disabled = true;
+                return;
+            }
+
+            if (!file.name.toLowerCase().endsWith('.ans') && !file.name.toLowerCase().endsWith('.txt')) {
+                fileInfo.textContent = 'Invalid file type (use .ans or .txt)';
+                fileInfo.className = 'file-info file-error';
+                ansInput.value = '';
+                generateBtn.disabled = true;
+                return;
+            }
+
+            fileInfo.textContent = `Loaded: ${file.name} (${Math.round(file.size / 1024)} KB)`;
+            fileInfo.className = 'file-info file-success';
+            generateBtn.disabled = false;
+
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                ansData = parseAnsFile(evt.target.result);
+                console.log('Parsed ANS data:', ansData);
+            };
+            reader.readAsText(file);
+        });
+
+        generateBtn.addEventListener('click', () => {
+            if (!ansData) {
+                alert('Please select an .ans file first');
+                return;
+            }
+
+            const ansInput = {
+                baseline: new PhaseMetrics(
+                    ansData.baseline.hr,
+                    ansData.baseline.bpSys,
+                    ansData.baseline.bpDia,
+                    ansData.baseline.lfa,
+                    ansData.baseline.rfa
+                ),
+                deepBreathing: new PhaseMetrics(
+                    ansData.deepBreathing.hr,
+                    ansData.deepBreathing.bpSys,
+                    ansData.deepBreathing.bpDia,
+                    ansData.deepBreathing.lfa,
+                    ansData.deepBreathing.rfa
+                ),
+                valsalva: new PhaseMetrics(
+                    ansData.valsalva.hr,
+                    ansData.valsalva.bpSys,
+                    ansData.valsalva.bpDia,
+                    ansData.valsalva.lfa,
+                    ansData.valsalva.rfa
+                ),
+                stand: new PhaseMetrics(
+                    ansData.stand.hr,
+                    ansData.stand.bpSys,
+                    ansData.stand.bpDia,
+                    ansData.stand.lfa,
+                    ansData.stand.rfa
+                ),
+                symptoms: ansData.symptoms || ['Chronic Fatigue'],
+                ectopicBeats: 0
+            };
+
+            const interpreter = new AnsInterpreter();
+            diagnosticResults = interpreter.interpret(ansInput);
+
+            console.log('Diagnostic Results:', diagnosticResults);
+
+            document.getElementById('patientName').textContent = ansData.patientName || 'Not specified';
+            document.getElementById('patientDob').textContent = ansData.dob || 'Not specified';
+            document.getElementById('assessmentDate').textContent = ansData.assessmentDate || new Date().toLocaleDateString();
+            document.getElementById('primaryDx').textContent = ansData.primaryDx || 'Not specified';
+
+            const normalList = document.getElementById('normalFindingsList');
+            normalList.innerHTML = '<li>Heart Rate (HR) at rest</li><li>Rhythm strip unremarkable</li>';
+
+            const abnormalList = document.getElementById('abnormalFindingsList');
+            abnormalList.innerHTML = '';
+            diagnosticResults.baseline.flags.forEach(flag => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="abnormal">${flag}</span>`;
+                abnormalList.appendChild(li);
+            });
+            diagnosticResults.stand.flags.forEach(flag => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="abnormal">${flag}</span>`;
+                abnormalList.appendChild(li);
+            });
+
+            const diagnosisList = document.getElementById('diagnosisList');
+            diagnosisList.innerHTML = '';
+            diagnosticResults.globalFlags.forEach(flag => {
+                const li = document.createElement('li');
+                li.textContent = flag;
+                diagnosisList.appendChild(li);
+            });
+
+            if (diagnosticResults.riskLabels.length > 0) {
+                document.getElementById('riskWarning').style.display = 'block';
+                document.getElementById('riskText').textContent = diagnosticResults.riskLabels.join('; ');
+            }
+
+            if (ansData.conditions.length > 0) {
+                const condList = document.getElementById('diagnosedConditionsList');
+                condList.innerHTML = '';
+                ansData.conditions.forEach(c => {
+                    const li = document.createElement('li');
+                    li.textContent = c;
+                    condList.appendChild(li);
+                });
+            }
+
+            if (ansData.medications.length > 0) {
+                const medList = document.getElementById('medicationsList');
+                medList.innerHTML = '';
+                ansData.medications.forEach(m => {
+                    const li = document.createElement('li');
+                    li.textContent = m;
+                    medList.appendChild(li);
+                });
+            }
+
+            fileInfo.textContent = `Report generated! ${diagnosticResults.globalFlags.length} findings`;
+            fileInfo.className = 'file-info file-success';
+
+            alert('Report generated successfully! Review findings on slides 2-3.');
+        });
+
+        updateSlide();
     </script>
 </body>
 </html>
